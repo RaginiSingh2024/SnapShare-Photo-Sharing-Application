@@ -552,7 +552,7 @@ else:
                         </div>
                         <div style="flex:1;">
                             <span style="font-weight: 700; color: #ffffff;">@{sender}</span> {message_txt} <br>
-                            <span style="font-size:0.75rem; color:#8b8e95;">{format_timestamp(created)}</span>
+                            <span style="font-size:0.75rem; color:#8b8e95;">{feed.format_timestamp(created)}</span>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -586,7 +586,7 @@ else:
             st.markdown(f"""
             - **Current Account ID:** {current_uid}
             - **Logged In Username:** @{current_uname}
-            - **Database Target:** `sqlite:///{DATABASE_NAME}`
+            - **Database Target:** `sqlite:///{database.DATABASE_NAME}`
             - **Status:** Execution Layer Active
             """)
             st.write("---")
