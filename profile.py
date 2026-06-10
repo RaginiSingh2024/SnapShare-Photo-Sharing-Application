@@ -5,8 +5,8 @@ import os
 def render_profile_view(user_id, current_user_id):
     """
     Renders a comprehensive, styled profile page for a given user_id.
-    Includes avatar, stats (posts, followers, following), follow button (if not own profile),
-    bio, and a 3-column grid of posts.
+    Includes avatar, stats (posts, followers, following) metric cards,
+    follow button (if not own profile), bio, and a 3-column grid of posts.
     """
     user = database.get_user_by_id(user_id)
     if not user:
@@ -26,36 +26,37 @@ def render_profile_view(user_id, current_user_id):
     # Check if viewing own profile
     is_own_profile = (user_id == current_user_id)
     
-    # Styled Profile Header Grid
-    st.markdown(f"""
-    <div class="glass-card" style="margin-bottom: 24px; padding: 24px;">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px;">
-            <!-- Profile Avatar -->
-            <div class="user-avatar-large">
-                {username[0].upper() if not profile_pic else ""}
+    # Styled Profile Header Grid using Streamlit Columns (Responsive & Native)
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    header_col1, header_col2 = st.columns([1, 2.5])
+    
+    with header_col1:
+        # Display Avatar
+        if profile_pic and (profile_pic.startswith("http://") or profile_pic.startswith("https://") or os.path.exists(profile_pic)):
+            st.image(profile_pic, use_column_width=True)
+        else:
+            # CSS Class is injected from app.py to style this cleanly
+            st.markdown(f"""
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 100px; height: 100%;">
+                <div class="user-avatar-large">{username[0].upper()}</div>
             </div>
+            """, unsafe_allow_html=True)
             
-            <!-- Profile Details and Stats -->
-            <div style="flex: 1; min-width: 250px;">
-                <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px;">
-                    <h2 style="margin: 0; color: #ffffff;">@{username}</h2>
-                </div>
-                
-                <!-- Stats row -->
-                <div style="display: flex; gap: 24px; margin-bottom: 16px;">
-                    <div><strong style="color: #ffffff; font-size: 1.1rem;">{posts_count}</strong> <span style="color: #9a9da3; font-size: 0.85rem;">posts</span></div>
-                    <div><strong style="color: #ffffff; font-size: 1.1rem;">{followers_count}</strong> <span style="color: #9a9da3; font-size: 0.85rem;">followers</span></div>
-                    <div><strong style="color: #ffffff; font-size: 1.1rem;">{following_count}</strong> <span style="color: #9a9da3; font-size: 0.85rem;">following</span></div>
-                </div>
-                
-                <!-- Bio -->
-                <div style="color: #d1d5db; font-size: 0.9rem; line-height: 1.5; margin-bottom: 8px;">
-                    {bio}
-                </div>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    with header_col2:
+        st.subheader(f"@{username}")
+        
+        # Stats Metrics
+        stats_col1, stats_col2, stats_col3 = st.columns(3)
+        with stats_col1:
+            st.metric(label="Posts", value=posts_count)
+        with stats_col2:
+            st.metric(label="Followers", value=followers_count)
+        with stats_col3:
+            st.metric(label="Following", value=following_count)
+        
+        st.markdown("---")
+        st.write(f"**Bio:** {bio}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Follow / Unfollow button if not own profile
     if not is_own_profile:
@@ -71,7 +72,7 @@ def render_profile_view(user_id, current_user_id):
                     database.follow_user(current_user_id, user_id)
                     st.rerun()
 
-    st.markdown("<h4 style='color:#ffffff; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:8px; margin-bottom:16px;'>📷 Posts Grid</h4>", unsafe_allow_html=True)
+    st.markdown("### 📷 Posts Grid")
 
     # 3-Column Posts Grid
     if not posts:
@@ -91,7 +92,7 @@ def render_profile_view(user_id, current_user_id):
                         st.caption(post["created_at"])
                         # View comments / likes
                         likes_cnt = database.get_post_likes_count(post["id"])
-                        st.markdown(f"❤️ **{likes_cnt} likes**", unsafe_allow_html=True)
+                        st.write(f"❤️ **{likes_cnt} likes**")
                         
                         # Add a quick delete option from profile if owned
                         if is_own_profile:
@@ -110,13 +111,11 @@ def render_edit_profile(user_id):
         st.error("User not found.")
         return
 
-    st.markdown("<h2 style='color:#ffffff; margin-bottom:20px;'>✏️ Edit Profile</h2>", unsafe_allow_html=True)
+    st.markdown("## ✏️ Edit Profile")
     
     # Form layout
     with st.form("edit_profile_form"):
         bio_val = st.text_area("Bio", value=user["bio"] if user["bio"] else "", max_chars=150, help="Brief bio (max 150 chars)")
-        
-        # In a real app we'd let them upload a pic, but here we can support a URL or placeholder setting
         profile_pic_val = st.text_input("Profile Picture URL (Optional)", value=user["profile_pic"] if user["profile_pic"] else "")
         
         submitted = st.form_submit_button("Save Changes", type="primary")
