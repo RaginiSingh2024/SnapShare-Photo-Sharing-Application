@@ -206,43 +206,64 @@ SnapShare/
 └── system_design_report.pdf
 ```
 
-### 🚀 Installation
-Clone Repository
+# 🚀 Installation
+
+## Clone Repository
+
+```bash
 git clone https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application.git
+```
 
-### Move Into Project
+## Move Into Project
+
+```bash
 cd SnapShare-Photo-Sharing-Application
+```
 
+## Install Dependencies
 
-### Install Dependencies
+```bash
 pip install -r requirements.txt
-Run Application
+```
+
+## Run Application
+
+```bash
 streamlit run app.py
+```
 
-### Application will start at:
+Application will start at:
 
+```text
 http://localhost:8501
+```
 
-### 🔒 Security Features
-• SHA-256 Password Hashing
-• Session-Based Authentication
-• Input Validation
-• File Type Validation
-• Secure User Registration
+# 🔒 Security Features
 
+- SHA-256 Password Hashing
+- Session-Based Authentication
+- Input Validation
+- File Type Validation
+- Secure User Registration
 
-### 🔮 Future Scope
-• Real-Time Chat System
-• AI-Based Content Recommendation
-• Story Feature
-• Video Upload Support
-• Cloud Storage Integration
-• Mobile Application
-• Redis Caching
-• PostgreSQL Migration
+---
 
-### 👩‍💻 Author
-Ragini Singh
+# 🔮 Future Scope
+
+- Real-Time Chat System
+- AI-Based Content Recommendation
+- Story Feature
+- Video Upload Support
+- Cloud Storage Integration
+- Mobile Application
+- Redis Caching
+- PostgreSQL Migration
+
+---
+
+# 👩‍💻 Author
+
+**Ragini Singh**
 
 B.Tech Computer Science Engineering
 
@@ -250,10 +271,10 @@ System Design Final Examination Project
 
 2025-26 Academic Year
 
+---
 
-### ⭐ GitHub Repository
+# ⭐ GitHub Repository
 
 https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application
 
 If you found this project useful, please consider giving it a ⭐.
-
