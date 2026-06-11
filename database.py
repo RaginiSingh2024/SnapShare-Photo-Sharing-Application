@@ -1,6 +1,5 @@
 import sqlite3
 import os
-from datetime import datetime
 
 DATABASE_NAME = "snapshare.db"
 
@@ -122,8 +121,14 @@ def create_user(username, email, password_hash, bio="", profile_pic=""):
         conn.commit()
         user_id = cursor.lastrowid
         return user_id
-    except sqlite3.IntegrityError:
-        return None
+    except sqlite3.IntegrityError as exc:
+        conn.rollback()
+        err = str(exc).lower()
+        if "username" in err:
+            return "username_taken"
+        if "email" in err:
+            return "email_taken"
+        return "duplicate"
     finally:
         conn.close()
 
@@ -133,6 +138,16 @@ def get_user_by_username(username):
     user = conn.execute(
         "SELECT * FROM users WHERE username = ?;",
         (username.lower().strip(),)
+    ).fetchone()
+    conn.close()
+    return user
+
+def get_user_by_email(email):
+    """Retrieves a user profile by their unique email."""
+    conn = get_db_connection()
+    user = conn.execute(
+        "SELECT * FROM users WHERE email = ?;",
+        (email.lower().strip(),)
     ).fetchone()
     conn.close()
     return user
@@ -505,3 +520,99 @@ def get_personalized_feed(user_id):
     ).fetchall()
     conn.close()
     return posts
+
+def get_suggested_users(current_uid, limit=5):
+    """Retrieves users that the current user is not following yet."""
+    conn = get_db_connection()
+    users = conn.execute(
+        """
+        SELECT id, username, bio, profile_pic 
+        FROM users 
+        WHERE id != ? AND id NOT IN (SELECT following_id FROM followers WHERE follower_id = ?)
+        ORDER BY created_at DESC
+        LIMIT ?;
+        """,
+        (current_uid, current_uid, limit)
+    ).fetchall()
+    conn.close()
+    return users
+
+def get_trending_creators(limit=5):
+    """Retrieves users who have followers or posts, ordered by followers first."""
+    conn = get_db_connection()
+    users = conn.execute(
+        """
+        SELECT u.id, u.username, u.bio, u.profile_pic,
+               (SELECT COUNT(*) FROM followers WHERE following_id = u.id) as followers_count,
+               (SELECT COUNT(*) FROM posts WHERE user_id = u.id) as posts_count
+        FROM users u
+        ORDER BY followers_count DESC, posts_count DESC
+        LIMIT ?;
+        """,
+        (limit,)
+    ).fetchall()
+    conn.close()
+    return users
+
+def generate_demo_users():
+    """Generates 6 mock user accounts with passwords hashed and basic follow connections."""
+    import hashlib
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    demo_data = [
+        ("travel_bug", "travel@example.com", "Wanderlust seeker ✈️. Capturing the world one frame at a time. Currently in Bali 🌴."),
+        ("foodie_explorer", "food@example.com", "Brunch enthusiast & coffee snob ☕. Seeking the best ramen in town 🍜."),
+        ("pixel_perfect", "pixel@example.com", "Visual artist & photographer 📸. Exploring lights, shadows, and minimalism."),
+        ("nature_lover", "nature@example.com", "Hiking trails and chasing sunsets 🌄. Let's keep the earth green 🍃."),
+        ("fitness_freak", "fitness@example.com", "No pain, no gain 💪. Personal trainer & nutrition advocate. Stay hydrated!"),
+        ("code_artisan", "code@example.com", "Converting coffee into clean code ☕💻. Open-source enthusiast & tech builder.")
+    ]
+    
+    created_ids = {}
+    for username, email, bio in demo_data:
+        # Check if already exists
+        existing = cursor.execute("SELECT id FROM users WHERE username = ?;", (username,)).fetchone()
+        if existing:
+            created_ids[username] = existing["id"]
+            continue
+            
+        # Salt & Hash password "password123"
+        salt = username.lower().strip()
+        salted_pwd = "password123" + salt
+        pwd_hash = hashlib.sha256(salted_pwd.encode()).hexdigest()
+        
+        cursor.execute(
+            "INSERT INTO users (username, email, password_hash, bio, profile_pic) VALUES (?, ?, ?, ?, ?);",
+            (username, email, pwd_hash, bio, "")
+        )
+        created_ids[username] = cursor.lastrowid
+        
+    # Set up some follow connections
+    follows = [
+        ("foodie_explorer", "travel_bug"),
+        ("nature_lover", "travel_bug"),
+        ("pixel_perfect", "travel_bug"),
+        ("code_artisan", "pixel_perfect"),
+        ("travel_bug", "pixel_perfect"),
+        ("fitness_freak", "code_artisan"),
+        ("nature_lover", "fitness_freak"),
+        ("travel_bug", "foodie_explorer"),
+    ]
+    
+    for follower, following in follows:
+        flr_id = created_ids.get(follower)
+        flg_id = created_ids.get(following)
+        if flr_id and flg_id and flr_id != flg_id:
+            try:
+                cursor.execute(
+                    "INSERT OR IGNORE INTO followers (follower_id, following_id) VALUES (?, ?);",
+                    (flr_id, flg_id)
+                )
+            except sqlite3.IntegrityError:
+                pass
+                
+    conn.commit()
+    conn.close()
+    return len(created_ids)
+

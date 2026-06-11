@@ -47,18 +47,26 @@ def register_user(username, email, password, bio="", profile_pic=""):
     if len(password) < 6:
         return False, "Password must be at least 6 characters long."
 
+    username = username.strip()
+    email = email.strip()
+
     # Check for existing user
     if database.get_user_by_username(username) is not None:
         return False, f"Username '{username}' is already taken."
+    if database.get_user_by_email(email) is not None:
+        return False, f"Email '{email}' is already registered."
 
     # Hash password & save
     pwd_hash = hash_password(password, username)
-    user_id = database.create_user(username, email, pwd_hash, bio, profile_pic)
-    
-    if user_id:
+    result = database.create_user(username, email, pwd_hash, bio, profile_pic)
+
+    if isinstance(result, int) and result > 0:
         return True, "Registration successful! Please log in."
-    else:
-        return False, "An error occurred during registration. Email or username might be registered."
+    if result == "username_taken":
+        return False, f"Username '{username}' is already taken."
+    if result == "email_taken":
+        return False, f"Email '{email}' is already registered."
+    return False, "Could not create account. Please try again."
 
 def login_user(username, password):
     """
@@ -87,7 +95,7 @@ def logout_user():
     st.session_state["logged_in"] = False
     st.session_state["user_id"] = None
     st.session_state["username"] = None
-    # Rerun to refresh views
+    st.session_state["nav_target"] = "🔑  Sign In"
     st.rerun()
 
 def get_current_user_id():
