@@ -1,15 +1,18 @@
-# 📸 SnapShare – Premium Photo Sharing Application
+# 📸 SnapShare – Designing a Scalable Photo Sharing Application Like Instagram
+
+SnapShare is a full-stack social media platform designed to demonstrate real-world system design concepts including user authentication, media management, social interactions, notification systems, profile management, database design, and scalable application architecture.
+
+**Technology Stack:** Streamlit • Python • SQLite • Custom CSS • GitHub
+
+---
 
 <div align="center">
 
-<h1>📸 SnapShare</h1>
+## 🔗 Quick Access
 
-<p>
-A Modern Instagram-Inspired Photo Sharing Platform built with
-<b>Streamlit, Python, SQLite, and Custom CSS</b>
-</p>
+</div>
 
-<p>
+<p align="center">
 
 <a href="https://snapshare-photo-sharing-application-98lhmr5fzvwqsicdcedjuy.streamlit.app/">
 <img src="https://img.shields.io/badge/🚀_Live_Demo-Open_App-ff4b4b?style=for-the-badge">
@@ -19,18 +22,27 @@ A Modern Instagram-Inspired Photo Sharing Platform built with
 <img src="https://img.shields.io/badge/📄_Documentation-View_Report-blue?style=for-the-badge">
 </a>
 
-🏗️ **Architecture Diagram:**  
-SnapShare_Final_Architecture.png
+<a href="SnapShare_Final_Architecture.png">
+<img src="https://img.shields.io/badge/🏗️_Architecture-View_Diagram-success?style=for-the-badge">
+</a>
 
-📐 **Architecture Details:**  
-architecture.md
+<a href="architecture.md">
+<img src="https://img.shields.io/badge/📐_Architecture_Details-Read_More-orange?style=for-the-badge">
+</a>
 
-💻 **GitHub Repository:**  
-https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application
+<a href="https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application">
+<img src="https://img.shields.io/badge/💻_GitHub-Repository-black?style=for-the-badge">
+</a>
 
 </p>
 
 </div>
+
+---
+
+## 🏗️ System Architecture
+
+![Architecture Diagram](SnapShare_Final_Architecture.png)
 
 ---
 
