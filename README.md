@@ -11,11 +11,11 @@ A Modern Instagram-Inspired Photo Sharing Platform built with
 
 <p>
 
-<a href="YOUR_STREAMLIT_LINK">
+<a href="https://snapshare-photo-sharing-application-98lhmr5fzvwqsicdcedjuy.streamlit.app/">
 <img src="https://img.shields.io/badge/🚀_Live_Demo-Open_App-ff4b4b?style=for-the-badge">
 </a>
 
-<a href="YOUR_DOCUMENTATION_LINK">
+<a href="https://docs.google.com/document/d/1SfZv1fz5rc_DjhuVs2EIVloONnMHDBQg74Tt_u2oBpM/edit?usp=sharing">
 <img src="https://img.shields.io/badge/📄_Documentation-View_Report-blue?style=for-the-badge">
 </a>
 
