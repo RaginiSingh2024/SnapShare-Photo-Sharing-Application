@@ -276,8 +276,6 @@ http://localhost:8501
 
 ---
 
-# De
-
 # 👩‍💻 Author
 
 **Ragini Singh**
