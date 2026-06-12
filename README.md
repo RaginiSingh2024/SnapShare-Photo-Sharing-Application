@@ -19,6 +19,15 @@ A Modern Instagram-Inspired Photo Sharing Platform built with
 <img src="https://img.shields.io/badge/📄_Documentation-View_Report-blue?style=for-the-badge">
 </a>
 
+🏗️ **Architecture Diagram:**  
+SnapShare_Final_Architecture.png
+
+📐 **Architecture Details:**  
+architecture.md
+
+💻 **GitHub Repository:**  
+https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application
+
 </p>
 
 </div>
@@ -260,6 +269,8 @@ http://localhost:8501
 - PostgreSQL Migration
 
 ---
+
+# De
 
 # 👩‍💻 Author
 
