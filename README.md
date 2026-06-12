@@ -121,12 +121,6 @@ The project demonstrates complete System Design concepts including:
 
 ---
 
-# 🏗 System Architecture
-
-![Architecture Diagram](SnapShare_Final_Architecture.png)
-
----
-
 # 🗄 Database Design
 
 ### Users Table
