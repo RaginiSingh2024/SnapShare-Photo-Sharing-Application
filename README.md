@@ -64,6 +64,92 @@ The project demonstrates complete System Design concepts including:
 - System Architecture Planning
 
 ---
+---
+
+# 📸 Application Screenshots
+
+## 🏠 Home Page
+
+![Home Page](screenshots/home.png)
+
+---
+
+## 🌙 Dark Mode Home
+
+![Dark Mode](screenshots/home_dark.png)
+
+---
+
+## 🔑 Sign In Page
+
+![Sign In](screenshots/sign-in.png)
+
+---
+
+## ✨ Create Account
+
+![Create Account](screenshots/account.png)
+
+---
+
+## 🔍 Explore Feed
+
+![Explore](screenshots/explore.png)
+
+---
+
+## 🔥 Trending Feed
+
+![Trending](screenshots/trending.png)
+
+---
+
+## 📤 Upload Post
+
+![Upload Post](screenshots/upload-1.png)
+
+---
+
+## 🖼️ Upload Preview
+
+![Upload Preview](screenshots/upload-png.png)
+
+---
+
+## 👤 User Profile
+
+![Profile](screenshots/my-profile.png)
+
+---
+
+## ✏️ Edit Profile
+
+![Edit Profile](screenshots/edit-profile.png)
+
+---
+
+## 🔔 Notifications
+
+![Notifications](screenshots/notification.png)
+
+---
+
+## 🔎 Search Feature
+
+![Search](screenshots/search.png)
+
+---
+
+## ⚙️ Settings
+
+![Settings](screenshots/setting.png)
+
+---
+
+## 📰 Home Feed
+
+![Home Feed](screenshots/home-feed.png)
+
 
 # ✨ Features
 
