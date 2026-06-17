@@ -34,6 +34,9 @@ SnapShare is a full-stack social media platform designed to demonstrate real-wor
 <img src="https://img.shields.io/badge/💻_GitHub-Repository-black?style=for-the-badge">
 </a>
 
+<a href="https://github.com/RaginiSingh2024/SnapShare-Photo-Sharing-Application">
+<img src="https://img.shields.io/badge/🐍_Python_Source_Code-View_Code-purple?style=for-the-badge">
+</a>
 </p>
 
 </div>
