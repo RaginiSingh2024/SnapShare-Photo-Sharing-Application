@@ -389,7 +389,7 @@ https://docs.google.com/document/d/1SfZv1fz5rc_DjhuVs2EIVloONnMHDBQg74Tt_u2oBpM/
 # Live Demo App Link
 https://snapshare-photo-sharing-application-98lhmr5fzvwqsicdcedjuy.streamlit.app/
 
-#Python Source Code Link
+# Python Source Code Link
 https://colab.research.google.com/drive/134sAPLI89m0VhbktT0ibSaj8cZyCB2bh?usp=sharing
 
 If you found this project useful, please consider giving it a ⭐.
